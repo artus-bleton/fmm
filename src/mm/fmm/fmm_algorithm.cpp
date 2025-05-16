@@ -297,18 +297,16 @@ void FastMapMatch::update_tg(
     bool connected = false;
     update_layer(i, &(layers[i]), &(layers[i + 1]),
                  eu_dists[i], reverse_tolerance, &connected);
-    if (!connected){
-        tg->print_optimal_info();
-        std::stringstream ss;
-        ss << "Unmatched trajectory " << traj.id << " at point " << i << " and " << (i + 1);
-        throw MatchException(traj.id, i, i + 1);
-
-
-      break;
+    if (!connected) {
+      tg->print_optimal_info();
+      std::stringstream ss;
+      ss << "Unmatched trajectory " << traj.id << " at point " << i << " and " << (i + 1);
+      throw std::runtime_error(ss.str());
     }
   }
   SPDLOG_DEBUG("Update transition graph done");
 }
+
 
 void FastMapMatch::update_layer(int level,
                                 TGLayer *la_ptr,
